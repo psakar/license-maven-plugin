@@ -148,6 +148,9 @@ public abstract class AbstractDownloadLicensesMojo
     @Parameter( property = "license.organizeLicensesByDependencies", defaultValue = "false" )
     protected boolean organizeLicensesByDependencies;
 
+    @Parameter( property = "license.checkExtensionMatchesContentType", defaultValue = "true" )
+    protected boolean checkExtensionMatchesContentType;
+
     @Parameter( property = "license.sortByGroupIdAndArtifactId", defaultValue = "false" )
     protected boolean sortByGroupIdAndArtifactId;
 
@@ -616,7 +619,7 @@ public abstract class AbstractDownloadLicensesMojo
 
                 if ( !downloadedLicenseURLs.contains( licenseUrl ) || organizeLicensesByDependencies )
                 {
-                    LicenseDownloader.downloadLicense( licenseUrl, proxyLoginPasswordEncoded, licenseOutputFile );
+                    LicenseDownloader.downloadLicense( licenseUrl, proxyLoginPasswordEncoded, licenseOutputFile, checkExtensionMatchesContentType);
                     downloadedLicenseURLs.add( licenseUrl );
                 }
             }

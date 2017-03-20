@@ -45,7 +45,7 @@ public class LicenseDownloader
      */
     public static final int DEFAULT_CONNECTION_TIMEOUT = 5000;
 
-    public static void downloadLicense( String licenseUrlString, String loginPassword, File outputFile )
+    public static void downloadLicense( String licenseUrlString, String loginPassword, File outputFile, boolean checkExtensionMatchesContentType )
         throws IOException
     {
         if ( licenseUrlString == null || licenseUrlString.length() == 0 )
@@ -80,7 +80,8 @@ public class LicenseDownloader
             }
 
             licenseInputStream = connection.getInputStream();
-            fos = new FileOutputStream( updateFileExtension( outputFile, connection.getContentType() ) );
+            File file = checkExtensionMatchesContentType ? updateFileExtension(outputFile, connection.getContentType()) : outputFile;
+            fos = new FileOutputStream(file);
             copyStream( licenseInputStream, fos );
             licenseInputStream.close();
             fos.close();
